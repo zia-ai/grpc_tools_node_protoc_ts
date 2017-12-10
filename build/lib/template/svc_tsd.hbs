@@ -52,16 +52,16 @@ export class {{{serviceName}}}Client extends grpc.Client {
 export abstract class {{{serviceName}}}Server {
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
-    {{lcFirst methodName}}(call: grpc.ServerUnaryCall, callback: (error: ServiceError | null, value: {{{responseTypeName}}}, trailer?: Metadata, flags?: number) => void): void;
+    abstract {{lcFirst methodName}}(call: grpc.ServerUnaryCall, callback: (error: grpc.ServiceError | null, value: {{{responseTypeName}}}, trailer?: grpc.Metadata, flags?: number) => void): void;
         {{/eq}}
         {{#eq type "ClientWritableStream"}}
-    {{lcFirst methodName}}(call: grpc.ServerReadableStream, callback: (error: ServiceError | null, value: {{{responseTypeName}}}, trailer?: Metadata, flags?: number) => void): void;
+    abstract {{lcFirst methodName}}(call: grpc.ServerReadableStream, callback: (error: grpc.ServiceError | null, value: {{{responseTypeName}}}, trailer?: grpc.Metadata, flags?: number) => void): void;
         {{/eq}}
         {{#eq type "ClientReadableStream"}}
-    {{lcFirst methodName}}(call: ServerWriteableStream): void;
+    abstract {{lcFirst methodName}}(call: grpc.ServerWriteableStream): void;
         {{/eq}}
         {{#eq type "ClientDuplexStream"}}
-    {{lcFirst methodName}}(call: ServerDuplexStream): void;
+    abstract {{lcFirst methodName}}(call: grpc.ServerDuplexStream): void;
         {{/eq}}
     {{/each}}
 }
