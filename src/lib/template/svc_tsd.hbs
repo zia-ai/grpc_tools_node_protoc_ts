@@ -6,7 +6,7 @@
 {{/each}}
 {{#each services}}
 
-interface I{{{serviceName}}}Service extends grpc.IMethodsMap {
+interface I{{{serviceName}}}Service extends grpc.ServiceDefinition {
     {{#each methods}}
     {{lcFirst methodName}}: I{{{methodName}}};
     {{/each}}
@@ -28,7 +28,7 @@ interface I{{{methodName}}} {
 
 export const {{{serviceName}}}Service: I{{{serviceName}}}Service;
 export class {{{serviceName}}}Client extends grpc.Client {
-    constructor(address: string, credentials: any, options?: grpc.IClientOptions);
+    constructor(address: string, credentials: grpc.ChannelCredentials, options?: object);
     {{#each methods}}
         {{#eq type "ClientUnaryCall"}}
     {{lcFirst methodName}}(request: {{{requestTypeName}}}, callback: (error: Error | null, response: {{{responseTypeName}}}) => void): grpc.ClientUnaryCall;
